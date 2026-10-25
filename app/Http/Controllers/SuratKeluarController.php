@@ -1,44 +1,70 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <title>Surat Keluar</title>
-</head>
+namespace App\Http\Controllers;
 
-<body>
-    <h1>Daftar Surat Keluar</h1>
+class SuratKeluarController extends Controller
+{
+    public function index()
+    {
+        $suratKeluar = [
+            [
+                'id' => 1,
+                'nomer_surat' => '001/SK/FT/X/2026',
+                'tanggal' => '10-10-2026',
+                'pengirim' => 'Fakultas Teknik',
+                'perihal' => 'Undangan Rapat'
+            ],
+            [
+                'id' => 2,
+                'nomer_surat' => '002/SK/FT/X/2026',
+                'tanggal' => '12-10-2026',
+                'pengirim' => 'BAA',
+                'perihal' => 'Pemberitahuan Akademik'
+            ],
+            [
+                'id' => 3,
+                'nomer_surat' => '003/SK/FT/X/2026',
+                'tanggal' => '15-10-2026',
+                'pengirim' => 'LPMM',
+                'perihal' => 'Undangan Sosialisasi'
+            ]
+        ];
 
-    <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
+        return view('surat-keluar.index', compact('suratKeluar'));
+    }
 
-    <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nomor Surat</th>
-                <th>Tanggal</th>
-                <th>Pengirim</th>
-                <th>Perihal</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($suratKeluar as $surat)
-            <tr>
-                <td>{{ $surat['id'] }}</td>
-                <td>{{ $surat['nomer_surat'] }}</td>
-                <td>{{ $surat['tanggal'] }}</td>
-                <td>{{ $surat['pengirim'] }}</td>
-                <td>{{ $surat['perihal'] }}</td>
-                <td>
-                    <a href="{{ route('surat-keluar.show', $surat['id']) }}">
-                        Detail
-                    </a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
+    public function show(int $id)
+    {
+        $suratKeluar = [
+            1 => [
+                'id' => 1,
+                'nomer_surat' => '001/SK/FT/X/2026',
+                'tanggal' => '10-10-2026',
+                'pengirim' => 'Fakultas Teknik',
+                'perihal' => 'Undangan Rapat'
+            ],
+            2 => [
+                'id' => 2,
+                'nomer_surat' => '002/SK/FT/X/2026',
+                'tanggal' => '12-10-2026',
+                'pengirim' => 'BAA',
+                'perihal' => 'Pemberitahuan Akademik'
+            ],
+            3 => [
+                'id' => 3,
+                'nomer_surat' => '003/SK/FT/X/2026',
+                'tanggal' => '15-10-2026',
+                'pengirim' => 'LPMM',
+                'perihal' => 'Undangan Sosialisasi'
+            ]
+        ];
 
-</html>
+        $surat = $suratKeluar[$id] ?? null;
+
+        if (!$surat) {
+            abort(404);
+        }
+
+        return view('surat-keluar.show', compact('surat'));
+    }
+}
