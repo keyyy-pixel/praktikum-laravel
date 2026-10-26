@@ -2,34 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Outgoingletter;
+
 class SuratKeluarController extends Controller
 {
     public function index()
     {
-        $suratKeluar = [
-            [
-                'id' => 1,
-                'nomer_surat' => '001/SK/FT/X/2026',
-                'tanggal' => '10-10-2026',
-                'pengirim' => 'Fakultas Teknik',
-                'perihal' => 'Undangan Rapat'
-            ],
-            [
-                'id' => 2,
-                'nomer_surat' => '002/SK/FT/X/2026',
-                'tanggal' => '12-10-2026',
-                'pengirim' => 'BAA',
-                'perihal' => 'Pemberitahuan Akademik'
-            ],
-            [
-                'id' => 3,
-                'nomer_surat' => '003/SK/FT/X/2026',
-                'tanggal' => '15-10-2026',
-                'pengirim' => 'LPMM',
-                'perihal' => 'Undangan Sosialisasi'
-            ]
-        ];
-
+        $suratKeluar = OutgoingLetter::all();
         return view('surat-keluar.index', compact('suratKeluar'));
     }
 

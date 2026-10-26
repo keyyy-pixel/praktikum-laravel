@@ -26,10 +26,10 @@
             @forelse ($suratKeluar as $surat)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $surat['nomer_surat'] }}</td>
-                    <td>{{ $surat['tanggal'] }}</td>
-                    <td>{{ $surat['pengirim'] }}</td>
-                    <td>{{ $surat['perihal'] }}</td>
+                    <td>{{ $surat->nomor_surat }}</td>
+                    <td>{{ $surat->tanggal }}</td>
+                    <td>{{ $surat->pengirim }}</td>
+                    <td>{{ $surat->perihal }}</td>
                     <td>
                         <a href="{{ route('surat-keluar.show', $surat['id']) }}">
                             Detail
