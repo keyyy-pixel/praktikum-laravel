@@ -1,11 +1,12 @@
 @extends('layouts.app')
-
 @section('title', 'Surat Masuk')
-
 @section('content')
 
     <h1>Daftar Surat Masuk</h1>
-
+    <a href="{{ route('surat-masuk.create') }}">+Tambah Surat Masuk</a>
+    @if (session('succes'))
+        <p style="color:green">{{ session('success') }}</p>
+    @endif
     <table border="1" cellpadding="0">
         <thead>
             <tr>
@@ -32,6 +33,18 @@
                         <a href="{{ route('surat-masuk.show', $surat->id) }}">
                             Detail
                         </a>
+                        |
+                        <a href="{{ route('surat-masuk.edit', $surat->id) }}">
+                            Edit
+                        </a>
+                        |
+                        <form action="{{ route('surat-masuk.destroy', $surat['id']) }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Hapus surat ini?')">
+                                Hapus
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @empty

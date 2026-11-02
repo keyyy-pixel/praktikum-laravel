@@ -18,6 +18,7 @@
                 <th>Tanggal</th>
                 <th>Pengirim</th>
                 <th>Perihal</th>
+                <th>Keterangan</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                     <td>{{ $surat->tanggal }}</td>
                     <td>{{ $surat->pengirim }}</td>
                     <td>{{ $surat->perihal }}</td>
+                    <td>{{ $surat->keterangan }}</td>
                     <td>
                         <a href="{{ route('surat-keluar.show', $surat['id']) }}">
                             Detail
