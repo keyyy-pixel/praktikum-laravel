@@ -16,14 +16,14 @@ Route::get('/', function () {
 // ->name('surat-masuk.show');
 
 // Route Surat Keluar
-Route::get('/surat-keluar', [SuratKeluarController::class, 'index'])
-  ->name('surat-keluar.index');
+//Route::get('/surat-keluar', [SuratKeluarController::class, 'index'])
+  //->name('surat-keluar.index');
 
-Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])
-  ->name('surat-keluar.show');
+//Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])
+  //->name('surat-keluar.show');
 
 Route::resource('/surat-masuk', SuratMasukController::class)
   ->parameters(['surat-masuk' => 'id']);
 
-//Route::resource('/surat-keluar', SuratKeluarController::class)
- // ->parameters(['surat-keluar' => 'id']);
+Route::resource('/surat-keluar', SuratKeluarController::class)
+ ->parameters(['surat-keluar' => 'id']);

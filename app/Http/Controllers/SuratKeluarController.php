@@ -2,48 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Outgoingletter;
+use Illuminate\Http\Request;
+use App\Models\OutgoingLetter;
 
 class SuratKeluarController extends Controller
 {
     public function index()
     {
-        $suratKeluar = OutgoingLetter::all();
+        $suratKeluar = OutgoingLetter::orderBy('id', 'desc')->get();
         return view('surat-keluar.index', compact('suratKeluar'));
+    }
+
+    public function create()
+    {
+        return view('surat-keluar.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nomor_surat' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'pengirim' => 'required|string|max:255',
+            'perihal' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        OutgoingLetter::create($validated);
+
+        return redirect()->route('surat-keluar.index')
+            ->with('success', 'Surat Berhasil Ditambahkan.');
     }
 
     public function show(int $id)
     {
-        $suratKeluar = [
-            1 => [
-                'id' => 1,
-                'nomer_surat' => '001/SK/FT/X/2026',
-                'tanggal' => '10-10-2026',
-                'pengirim' => 'Fakultas Teknik',
-                'perihal' => 'Undangan Rapat'
-            ],
-            2 => [
-                'id' => 2,
-                'nomer_surat' => '002/SK/FT/X/2026',
-                'tanggal' => '12-10-2026',
-                'pengirim' => 'BAA',
-                'perihal' => 'Pemberitahuan Akademik'
-            ],
-            3 => [
-                'id' => 3,
-                'nomer_surat' => '003/SK/FT/X/2026',
-                'tanggal' => '15-10-2026',
-                'pengirim' => 'LPMM',
-                'perihal' => 'Undangan Sosialisasi'
-            ]
-        ];
-
-        $surat = $suratKeluar[$id] ?? null;
-
-        if (!$surat) {
-            abort(404);
-        }
-
+        $surat = OutgoingLetter::findOrFail($id);
         return view('surat-keluar.show', compact('surat'));
     }
+
+    public function edit($id)
+    {
+        $surat = OutgoingLetter::findOrFail($id);
+        return view('surat-keluar.edit', compact('surat'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $surat = OutgoingLetter::findOrFail($id);
+
+        $validated = $request->validate([
+            'nomor_surat' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'pengirim' => 'required|string|max:255',
+            'perihal' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        $surat->update($validated);
+
+        return redirect()->route('surat-keluar.index')
+            ->with('success', 'Surat Berhasil diperbaharui.');
+    }
+
+    public function destroy($id)
+    {
+        $surat = OutgoingLetter::findOrFail($id);
+        $surat->delete();
+
+        return redirect()->route('surat-keluar.index')
+            ->with('success', 'Surat berhasil dihapus.');
+    }
 }
+
+// ROUTE -> TAMPIL
+// ROUTE -> CONTROLLER
